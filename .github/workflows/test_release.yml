@@ -50,6 +50,11 @@ on:
         required: true
         type: boolean
         default: true
+      supp_op:
+        description: '是否开启一加8E处理器机型支持?(非该机型无须勾)'
+        required: false
+        type: boolean
+        default: false
       get_manager:
         description: '是否同时获取最新KSU管理器?'
         required: true
@@ -69,10 +74,13 @@ jobs:
       make_release: ${{ inputs.make_release }}
       kernelsu_variant: ${{ inputs.kernelsu_variant }}
       kernelsu_branch: ${{ inputs.kernelsu_branch }}
-      # kernelsu_branch_other: ${{ inputs.kernelsu_branch_other }}
       version: ${{ inputs.version }}
       use_zram: ${{ inputs.use_zram }}
       use_kpm: ${{ inputs.use_kpm }}
+      supp_op: ${{ inputs.supp_op }}
+      fast: ${{ inputs.fast }}
+      onlyAk3: ${{ inputs.onlyAk3 }}
+      build_time: ${{ inputs.build_time }}
 
   trigger-release:
     runs-on: ubuntu-latest
@@ -186,11 +194,6 @@ jobs:
           GITLAB_REPO="susfs4ksu"
 
           declare -A BRANCH_MAP=(
-            ["gki_android12_5_10"]="gki-android12-5.10"
-            ["gki_android13_5_10"]="gki-android13-5.10"
-            ["gki_android13_5_15"]="gki-android13-5.15"
-            ["gki_android14_5_15"]="gki-android14-5.15"
-            ["gki_android14_6_1"]="gki-android14-6.1"
             ["gki_android15_6_6"]="gki-android15-6.6"
           )
 
@@ -257,11 +260,6 @@ jobs:
           echo "提交的哈希值与链接(以下提交指的是,本次编译时,KSU或SUSFS所在的进度):" >> $GITHUB_ENV
           echo "- **KernelSU为${{ inputs.kernelsu_variant == 'Next' && 'KernelSU-' || '' }}${{ inputs.kernelsu_variant }}${{ inputs.kernelsu_branch == 'Dev(开发)' && format('({0})', needs.get_manager.outputs.ksuVer) || '稳定版' }}** (提交): [$KSU_REF]($KSU_URL)" >> $GITHUB_ENV
           echo "- **SUSFS4KSU** (提交):" >> $GITHUB_ENV
-          echo "  - gki-android12-5.10: [$COMMIT_HASH_gki_android12_5_10]($COMMIT_URL_gki_android12_5_10)" >> $GITHUB_ENV
-          echo "  - gki-android13-5.10: [$COMMIT_HASH_gki_android13_5_10]($COMMIT_URL_gki_android13_5_10)" >> $GITHUB_ENV
-          echo "  - gki-android13-5.15: [$COMMIT_HASH_gki_android13_5_15]($COMMIT_URL_gki_android13_5_15)" >> $GITHUB_ENV
-          echo "  - gki-android14-5.15: [$COMMIT_HASH_gki_android14_5_15]($COMMIT_URL_gki_android14_5_15)" >> $GITHUB_ENV
-          echo "  - gki-android14-6.1: [$COMMIT_HASH_gki_android14_6_1]($COMMIT_URL_gki_android14_6_1)" >> $GITHUB_ENV
           echo "  - gki-android15-6.6: [$COMMIT_HASH_gki_android15_6_6]($COMMIT_URL_gki_android15_6_6)" >> $GITHUB_ENV
           echo "" >> $GITHUB_ENV
           echo "</details>" >> $GITHUB_ENV
