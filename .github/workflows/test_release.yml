@@ -307,7 +307,9 @@ jobs:
 
       # 如果 make_release 为 true，则创建 GitHub 发布并上传文件
       - name: Create GitHub Release
-        uses: actions/create-release@v1
+        uses: actions/create-release@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.ZZH_TOKEN }}
         with:
           tag_name: ${{ env.NEW_TAG }}  # Use the generated tag for the release
           prerelease: true  # Mark the release as a pre-release
