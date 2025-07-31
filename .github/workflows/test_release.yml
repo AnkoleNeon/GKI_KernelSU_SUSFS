@@ -78,8 +78,6 @@ jobs:
       use_zram: ${{ inputs.use_zram }}
       use_kpm: ${{ inputs.use_kpm }}
       supp_op: ${{ inputs.supp_op }}
-      fast: ${{ inputs.fast }}
-      onlyAk3: ${{ inputs.onlyAk3 }}
       build_time: ${{ inputs.build_time }}
 
   trigger-release:
