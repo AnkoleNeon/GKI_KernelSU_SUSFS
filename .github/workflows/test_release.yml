@@ -93,7 +93,7 @@ jobs:
       REPO_OWNER: Neoncat
       REPO_NAME: GKI_KernelSU_SUSFS_Oplus
       SUS_VERSION: ''
-      GITHUB_TOKEN: ${{ secrets.ZZH_TOKEN }}
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       RELEASE_NAME: "GKI内核: ${{ inputs.kernelsu_variant == 'Next' && 'KernelSU-' || '' }}${{ inputs.kernelsu_variant }}(${{ needs.get_manager.outputs.ksuVer }})  & SUSFS ${{ needs.get_manager.outputs.susVer }}"
       RELEASE_NOTES: |
         此处包含：**${{ inputs.kernelsu_variant == 'Next' && 'KernelSU-' || '' }}${{ inputs.kernelsu_variant }}**、SUSFS ${{ needs.get_manager.outputs.susVer }} ${{ inputs.use_zram && '、LZ4KD' || '' }}
@@ -266,7 +266,7 @@ jobs:
       # Get the Latest Tag from GitHub
       - name: 生成和创建新标签
         env:
-          GITHUB_TOKEN: ${{ secrets.ZZH_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
             # Fetch the latest tag from GitHub (this is the latest tag based on the GitHub API)
             SUS_VERSION=${{ needs.get_manager.outputs.susVer }}
